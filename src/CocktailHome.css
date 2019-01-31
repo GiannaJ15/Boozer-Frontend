@@ -1,0 +1,17 @@
+.homeImage {
+  float:left;
+  width: 50%;
+  opacity: .6
+}
+
+.weather {
+  float: left;
+  font-family: fantasy;
+}
+
+.homepage {
+  display: flex;
+  flex-wrap: wrap;
+  flex-direction: column;
+  padding: 10px
+}

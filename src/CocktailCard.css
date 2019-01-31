@@ -1,0 +1,14 @@
+.cocktailCard {
+  width: 67%;
+  float:left;
+  padding-left: 10px;
+  font-family: Tahoma;
+}
+
+.cocktailName {
+  font-style: bold;
+}
+
+.cocktailDescription {
+  font-style: oblique;
+}

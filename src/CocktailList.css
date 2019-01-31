@@ -1,0 +1,40 @@
+.cocktailList {
+  background: linear-gradient(#cb2d3e, #ef473a);
+  width: 100%%;
+  height: 700px;
+  overflow: auto;
+  float: left;
+  opacity: .9;
+  font-family: fantasy;
+
+
+}
+
+.cocktailHeader {
+  text-align: center;
+  color: white;
+
+
+}
+
+.list {
+    color: #fff;
+    list-style: none;
+    padding-left: 0px;
+}
+
+.listItem {
+    background-color: rgba(255, 255, 255, 0.2);
+    border-left: 5px solid white;
+    color: white;
+    text-decoration-color: white;
+    font-size: 20%;
+    font-weight: bold;
+    padding-left: 20px;
+
+}
+
+.cocktailIcon {
+  height: 10%;
+  width: 10%
+}

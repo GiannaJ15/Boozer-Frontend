@@ -1,0 +1,47 @@
+.AddButton {
+  border-radius: 4px;
+  background-color: #ef474a;
+  border: none;
+  color: #FFFFFF;
+  text-align: center;
+  font-size: 15px;
+  font-family: fantasy;
+  float: left;
+  padding: 5px;
+  width: 30%;
+
+  transition: all 0.5s;
+  cursor: pointer;
+  margin: 5px;
+}
+
+.AddButton span {
+  cursor: pointer;
+  display: inline-block;
+  position: relative;
+  transition: 0.5s;
+}
+
+.AddButton span:after {
+  content: '\2039';
+  position: absolute;
+  opacity: 0;
+  top: 0;
+  left: -25px;
+  transition: 0.5s;
+}
+
+
+.AddButton:hover span:after {
+  opacity: 1;
+  right: 0;
+}
+
+.AddButton:hover span {
+  padding-right: 25px;
+}
+
+.buttonIcon {
+  height: 10%;
+  width: 10%
+}
