@@ -1,17 +1,44 @@
 .homeImage {
-  float:left;
-  width: 50%;
-  opacity: .6
+  /* width: 50%;
+  height: 100%; */
+  /* opacity: .6; */
+  height: 50%;
+  width: 100%;
+  /* margin-left: 250px; */
+  /* margin-right: 250px; */
+  margin-top: 90px;
+  /* margin-left: 25% */
+
 }
 
 .weather {
-  float: left;
-  font-family: fantasy;
+  font-family: "Futura";
+  width: 70%;
+  margin-left: 10px
 }
 
 .homepage {
+  /* background-color: #000; */
   display: flex;
   flex-wrap: wrap;
   flex-direction: column;
-  padding: 10px
+  padding: 10px;
+  color: black;
+  background: white;
+  font-weight: bold;
+  align-items: center;
+  width: 40%
+}
+
+.homepage img {
+  border-radius: 10px;
+
+}
+
+.homepage a {
+  color: #ff0dbf
+}
+
+.homepage div {
+  justify-content: center
 }

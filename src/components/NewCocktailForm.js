@@ -51,20 +51,33 @@ export default class NewCocktailForm extends Component {
 
   }
 
+  hideForm = () => {
+    this.props.hideForm()
+  }
+
   render(){
 
     let {name, description, instructions, proportions} = this.state
 
     return(
       <div>
+        <h2>
+          NEW COCKTAIL
+        </h2>
         <form onSubmit = {this.handleSubmit}>
           Name: <input onChange = {this.changeHandler} type= "text" name= "name" value = {name} />
 
-          Description: <input onChange = {this.changeHandler}  className= "textbox" type= "text" name= "description" value = {description} />
+          Description:
+          <br/>
+          <textarea onChange = {this.changeHandler}  className= "textbox" wrap= "hard" type= "text" name= "description" value = {description} />
 
-          Instructions: <input onChange = {this.changeHandler} className= "textbox" type= "text" name=  "instructions" value = {instructions} />
-
+          Instructions:
+          <br/>
+          <textarea onChange = {this.changeHandler} className= "textbox" wrap= "hard" type= "text" name=  "instructions" value = {instructions} />
+          <br/>
+          <br/>
           Proportions:
+          <br/>
           <br/>
 
             <ProportionsInput changeHandler = {this.changeHandler} proportions = {proportions} />
@@ -72,9 +85,12 @@ export default class NewCocktailForm extends Component {
             <button onClick = {this.addProportion}>
                 <img alt = "addCocktailProportion" className = "addCocktailProportion" src = "https://cdn4.iconfinder.com/data/icons/keynote-and-powerpoint-icons/256/Plus-512.png" />
               </button>
-          <input type= "submit" value= "Submit"/>
+          <input className = "Submit" type= "submit" value= "Submit"/>
 
           </form>
+          <button className = "hideForm" onClick = {this.hideForm}>
+            Hide Form
+          </button>
       </div>
     )
   }

@@ -3,7 +3,13 @@
   float:left;
   padding-left: 10px;
   font-family: Tahoma;
+  /* background-image: linear-gradient(90deg, #ffffff 25%, #000000 25%, #000000 50%, #ffffff 50%, #ffffff 75%, #000000 75%, #000000 100%);
+  background-size: 80.00px 80.00px; */
+
+
 }
+
+
 
 .cocktailName {
   font-style: bold;
@@ -11,4 +17,28 @@
 
 .cocktailDescription {
   font-style: oblique;
+}
+
+.cocktailCard div {
+  margin-top: 250px;
+  background-color: black;
+  color: white;
+  border-radius: 20px;
+  padding: 10px;
+  width: 80%;
+  margin-left: 100px
+}
+
+.cocktailIconn {
+  height: 100px;
+  width: 100px
+}
+
+.cocktailCard button {
+  font-family: "Futura";
+  border-radius: 6px;
+  background: transparent;
+  color: white;
+  font-family: "Futura";
+  font-weight: bold;
 }

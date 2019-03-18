@@ -10,6 +10,7 @@ import './CocktailAddForm.css';
 import './CocktailContainer.css'
 import App from './App';
 import * as serviceWorker from './serviceWorker';
+import * as emailjs from 'emailjs-com'
 
 ReactDOM.render(
   <BrowserRouter>

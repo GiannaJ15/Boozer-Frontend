@@ -1,4 +1,5 @@
 import React, {Component} from 'react';
+import AddButton from "./AddButton";
 import { Link } from "react-router-dom";
 
 export default class Home extends Component {
@@ -9,27 +10,58 @@ export default class Home extends Component {
       userLong: "",
       userLat: "",
       weather: "",
-      temperature: ""
+      temperature: "",
+      sadCocktail: null,
+      happyCocktail: null
     }
   }
 
   // Problem with putting it here: componentWillReceiveProps rerenders the component every time a new prop is received.. this component is getting rendered three times, then getting
 
 // the reason i did this function was bc in componenet did mount don thvae access to props _._
-  componentWillReceiveProps() {
-      fetch('http://ip-api.com/json/')
-        .then(resp => resp.json())
-          .then(response => {
-            this.setState({
-              userLat: response.lat,
-              userLong: response.lon
-            })
+
+  componentDidMount () {
+    fetch('http://ip-api.com/json/')
+      .then(resp => resp.json())
+        .then(response => {
+          this.setState({
+            userLat: response.lat,
+            userLong: response.lon
           })
-            .then(this.fetchWeather)
-    }
+        })
+          .then(this.fetchWeather)
+  }
+
+  componentWillReceiveProps(nextProps) {
+
+    if (nextProps.cocktails !== this.props.cocktails){
+      fetch('http://ip-api.com/json/')
+      .then(resp => resp.json())
+        .then(response => {
+          this.setState({
+            userLat: response.lat,
+            userLong: response.lon
+          })
+        })
+          .then(this.fetchWeather)
+        }
+  }
+
+  // componentWillReceiveProps() {
+  //     fetch('http://ip-api.com/json/')
+  //       .then(resp => resp.json())
+  //         .then(response => {
+  //           this.setState({
+  //             userLat: response.lat,
+  //             userLong: response.lon
+  //           })
+  //         })
+  //           .then(this.fetchWeather)
+  //   }
 
 
     fetchWeather = () => {
+      console.log("state", this.state)
       fetch(`https://api.openweathermap.org/data/2.5/weather?lat=${this.state.userLat}&lon=${this.state.userLong}&APPID=d35ef01ff2e6c622389f8553825100cd`)
         .then(resp => resp.json())
           .then((response) => {
@@ -38,6 +70,27 @@ export default class Home extends Component {
               weather: response.weather[0],
               temperature: response.main.temp
             })
+          })
+          .then( () => {
+
+
+            let sadCocktails = this.props.cocktails.filter(cocktail => {
+              return cocktail.description.includes("Whiskey")
+            })
+
+           let sadCocktail = sadCocktails[Math.floor(Math.random()*sadCocktails.length)]
+
+           let happyCocktails = this.props.cocktails.filter(cocktail => {
+             return cocktail.description.includes("beer")
+           })
+
+            let happyCocktail = happyCocktails[Math.floor(Math.random()*happyCocktails.length)]
+
+            this.setState({
+              sadCocktail: sadCocktail,
+              happyCocktail: happyCocktail
+            })
+
           })
     }
 
@@ -48,21 +101,7 @@ export default class Home extends Component {
   renderSwitch() {
 
     let weatherIcon = `http://openweathermap.org/img/w/${this.state.weather.icon}.png`
-
-    let sadCocktails = this.props.cocktails.filter(cocktail => {
-      return cocktail.description.includes("Whiskey")
-    })
-
     let temperature = (Math.floor(((((this.state.temperature)-273.15)*(9/5)+32)))+ '°F')
-
-   let sadCocktail = sadCocktails[Math.floor(Math.random()*sadCocktails.length)]
-
-   let happyCocktails = this.props.cocktails.filter(cocktail => {
-     return cocktail.description.includes("beer")
-   })
-
-    let happyCocktail = happyCocktails[Math.floor(Math.random()*happyCocktails.length)]
-
 
     switch(this.state.weather.main) {
       case "Drizzle":
@@ -73,9 +112,8 @@ export default class Home extends Component {
           <div className = "weather">
             <img alt = {this.state.weather.main} src= {weatherIcon} />
             <h4> {temperature} </h4>
-            Perfect day to wallow in your misery.
-            Why don't you drown your sorrows with a
-            <Link to= {`/cocktails/${sadCocktail.name}`}>{sadCocktail.name}</Link>
+            Perfect weather to wallow in your misery.
+            Why don't you drown your sorrows with a  <Link to= {`/cocktails/${this.state.sadCocktail.name}`}>{this.state.sadCocktail.name}</Link>
           </div>
         )
 
@@ -84,24 +122,35 @@ export default class Home extends Component {
             <div className = "weather">
             <img alt = {this.state.weather.main} src= {weatherIcon} />
             <h4> {temperature} </h4>
-            Clear skies! Relax a little with a
-            <Link to= {`/cocktails/${happyCocktail.name}`}>{happyCocktail.name}</Link>
+            Clear skies! Relax a little with a  <Link to= {`/cocktails/${this.state.happyCocktail.name}`}>{this.state.happyCocktail.name}</Link>
             </div>
           )
+          case "Snow":
+            return (
+              <div className = "weather">
+                <img alt = {this.state.weather.main} src= {weatherIcon} />
+                <h4> {temperature} </h4>
+                Snow. Calm, yet solemn. Might I suggest a  <Link to= {`/cocktails/${this.state.sadCocktail.name}`}>{this.state.sadCocktail.name}</Link> to help with all that self-reflection.
+              </div>
+            )
     }
   }
 
   render () {
-    console.log("rendered", this.props.cocktails.length)
+    console.log("STATE", this.state)
     return(
       <div className= "homepage">
-        <div className = "homeImage">
-          <img alt = "pouring drink" src = 'https://media.giphy.com/media/bovrcMka5hdy8/giphy.gif'/>
-          </div>
+
+          <br/>
+          <br/>
 
           <div className = "drinkSuggestion">
-            {this.renderSwitch()}
+            {this.props.cocktails.length > 0 && (this.state.sadCocktail || this.state.happyCocktail) && this.renderSwitch()}
           </div>
+
+            <img className = "homeImage" alt = "drink" src = 'https://img.freepik.com/free-vector/vector-illustration-whiskey-glass_1441-40.jpg?size=338&ext=jpg'/>
+          <AddButton displayForm = {this.props.displayForm} addNewCocktail = {this.props.addNewCocktail}/>
+
       </div>
     )
   }

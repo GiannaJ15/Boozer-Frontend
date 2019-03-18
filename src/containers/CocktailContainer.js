@@ -3,7 +3,8 @@ import CocktailList from '../components/CocktailList';
 import CocktailCard from '../components/CocktailCard'
 import { Route, Switch } from "react-router-dom";
 import Home from "./Home";
-import AddButton from "./AddButton";
+import Modal from '../components/Modal'
+
 import NewCocktailForm from "../components/NewCocktailForm"
 
 
@@ -15,7 +16,9 @@ export default class CocktailContainer extends Component {
     displayForm: false,
     ingredients: [],
     cocktailProportions: [],
-    newCocktail: null
+    newCocktail: null,
+    showModal: false,
+    modalCocktail: null
   }
 
   // displayForm as a state so we know whether or not to render the form based on whether the cocktailAddBtn was clicked
@@ -98,6 +101,7 @@ export default class CocktailContainer extends Component {
   }
 
   postIngredients = (cocktailResponse, cocktailObj) => {
+    console.log("ingredients being posted", "cocktailResponse:", cocktailResponse, "cocktail Object:" , cocktailObj)
     let cocktailProportions = []
       cocktailObj.proportions.map(proportion => {
         let savedIngredient = this.state.ingredients.filter(ingredient => {
@@ -136,14 +140,15 @@ export default class CocktailContainer extends Component {
     // setstate to CocktailProportions so that we can acess this array later
     this.setState({
       cocktailProportions: cocktailProportions
-    }, () => this.postProportions(cocktailResponse))
-
+    }, () => {
+      console.log("SETTING PROPORTIONS")
+      this.postProportions(cocktailResponse)
+    })
   }
 
 
   postProportions = (cocktailResponse) => {
       this.state.cocktailProportions.map(proportion => {
-        console.log(proportion, proportion.amount, cocktailResponse.id, proportion.ingredient[0].id)
         return (
           fetch('http://localhost:3000/api/v1/proportions', {
             method: 'POST',
@@ -155,10 +160,15 @@ export default class CocktailContainer extends Component {
             })
           })
           .then(resp => resp.json())
-            .then(() => this.setState({
-              cocktails: [...this.state.cocktails, cocktailResponse],
+            .then(() => {
+              this.setState({
+                cocktails: [...this.state.cocktails, cocktailResponse],
               // newCocktail: cocktailResponse
-            }))
+              })
+              let name = cocktailResponse.name
+              window.location.replace(`http://localhost:3001/cocktails/${name}`)
+            }
+          )
         )
 
       })
@@ -171,13 +181,30 @@ export default class CocktailContainer extends Component {
   //   })
   // }
 
+  hideForm = () => {
+    this.setState({
+      displayForm: false
+    })
+  }
 
+  openModal = (cocktail) => {
+    this.setState({
+      showModal: true,
+      modalCocktail: cocktail
+    })
+  }
 
+  hideModal = () => {
+    this.setState({
+      showModal: false
+    })
+  }
 
   render() {
       return (
         <div className = "cocktailContainer">
           <CocktailList cocktails = {this.state.cocktails}/>
+          {this.state.showModal && <Modal cocktail = {this.state.modalCocktail} hideModal = {this.hideModal}/>}
           <Switch>
 
                   <Route
@@ -189,30 +216,29 @@ export default class CocktailContainer extends Component {
                         });
 
                         return(
-                        <CocktailCard  cocktail = {cocktail[0]}/>
+                        <CocktailCard  openModal = {this.openModal} cocktail = {cocktail[0]}/>
 
                         )}}
                     />
 
 
+                    <Route
+                       path = "/cocktails"
+                      render = {() => {
+                        return (
+                          <Home displayForm = {this.state.displayForm} cocktails = {this.state.cocktails} addNewCocktail = {this.addNewCocktail} />
+                        )
+                      }}
+                      />
 
-              <Route
-                 path = "/cocktails/"
-                render = {() => {
-                  return (
-                    <Home cocktails = {this.state.cocktails} />
-                  )
-                }}
-                />
 
 
             </Switch>
 
-            <AddButton addNewCocktail = {this.addNewCocktail}/>
 
             <div className = "newCocktailForm">
                 {
-                  this.state.displayForm && <NewCocktailForm createNewCocktail = {this.createNewCocktail}/>
+                  this.state.displayForm && <NewCocktailForm hideForm = {this.hideForm} createNewCocktail = {this.createNewCocktail}/>
                 }
             </div>
 

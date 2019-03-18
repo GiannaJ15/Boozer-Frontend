@@ -32,18 +32,23 @@ export default class CocktailCard extends Component {
   }
 
   handleClick = (e) => {
-    fetch(`http://localhost:3000/api/v1/cocktails/${e.target.dataset.id}`, {
+    fetch(`http://localhost:3000/api/v1/cocktails/${this.state.cocktail.id}`, {
       method: 'DELETE'
-    })
-// Wanna redirect to /cocktails
+    }).then(() => window.location.replace('http://localhost:3001/cocktails/'))
   }
 
+  popModal = () => {
+    this.props.openModal(this.state.cocktail)
+  }
 
   displayCocktailInfo = () => {
 
     return(
       <div>
+        <span>
+        <img alt = "cocktail Icon" className = "cocktailIconn" src="https://i.pinimg.com/originals/a7/14/92/a71492d902476558960513154243f86b.png"/>
         <h2 className= "cocktailName"> {this.state.cocktail.name.toUpperCase()} </h2>
+        </span>
         <h5 className= "cocktailDescription"> {this.state.cocktail.description} </h5>
         <h6> {this.state.cocktail.instructions} </h6>
         <h3> Ingredients </h3>
@@ -56,7 +61,10 @@ export default class CocktailCard extends Component {
             )
           })}
         </ul> </h5>
-        <button onClick = {this.handleClick} data-id= {this.state.cocktail.id}> Delete Cocktail </button>
+        <span className = "buttons">
+        <button onClick = {this.handleClick}> Delete Cocktail </button>
+        <button onClick = {this.popModal}> Share with fellow BoozeR </button>
+        </span>
       </div>
     )
   }

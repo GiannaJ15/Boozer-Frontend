@@ -1,24 +1,81 @@
 .newCocktailForm {
-  font-family: fantasy;
+  font-family: "Futura";
   max-width:400px;
-	margin:50px auto;
-	background:#fff;
-	border-radius:2px;
+	/* margin:50px auto; */
+  margin-top: 150px;
+  /* background: repeating-linear-gradient(
+    to right,
+    #111,
+    #000 20px,
+    #1111 20px,
+    #000 20px
+  ); */
+  background: transparent;
+	/* border-radius:2px; */
 	padding:20px;
   float: left;
+  color: black
+
 
 }
 
+.hideForm {
+  background: transparent;
+  color: black;
+  border: none;
+  cursor: pointer;
+}
+
 .newCocktailForm input {
-  width:100%
+  width:100%;
+  border-radius: 2px;
+  border-top: black;
+  border-left: black;
+  border-right:black;
+  color: black !important;
+  font-family: "Futura";
+  font-weight: bold
+}
+
+.Submit {
+  background-color: #ff0080;
+  color: white;
+  border-radius: 14px
+}
+
+.newCocktailForm button {
+  border-radius: 4px
 }
 
 .textbox {
   height: 100px;
-  width: 150px
+  width: 100%;
+  border: none;
+  border-bottom: 1px solid gray
 }
 
 .addCocktailProportion {
   width: 10px;
-  height: 10px
+  height: 10px;
+
 }
+
+.newCocktailForm textarea {
+  width:100%;
+  border-radius: 2px;
+  border-top: black;
+  border-left: black;
+  border-right:black;
+  color: black !important;
+  font-family: "Futura";
+  font-weight: bold
+}
+
+/* input:focus,
+textarea:focus{
+    outline: none;
+} */
+
+/* .newCocktailForm h2 {
+
+} */

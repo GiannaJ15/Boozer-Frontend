@@ -7,7 +7,7 @@ export default class CocktailList extends Component {
   makeLink = (cocktail) => {
     return(
         <Link style={{ textDecoration: 'none' }} key ={cocktail.name} to= {`/cocktails/${cocktail.name}`}>
-        <img alt = "cocktail Icon" className = "cocktailIcon" src="https://cdn4.iconfinder.com/data/icons/drinks-2/24/Martini-Glass-512.png"/>
+        <img alt = "cocktail Icon" className = "cocktailIcon" src="https://i.pinimg.com/originals/a7/14/92/a71492d902476558960513154243f86b.png"/>
         <li className = "listItem"> {cocktail.name.toUpperCase()}</li>
       </Link>
     )
@@ -21,10 +21,16 @@ export default class CocktailList extends Component {
 
 
     return (
-      <div>
+      <div className = "cocktailListContainer">
           <div className = "cocktailList">
             <Link to= '/cocktails' style={{ textDecoration: 'none' }}>
-              <h2 className= "cocktailHeader" > My Cocktails </h2>
+              <h2 className= "cocktailHeader" > #BoozeR# </h2>
+                <img className = "boozerImage" alt = "pouring drink" src = 'https://i.gifer.com/3W0t.gif'/>
+                <img className = "boozerImage" alt = "pouring drink" src = 'https://i.gifer.com/3W0t.gif'/>
+                <img className = "boozerImage" alt = "pouring drink" src = 'https://i.gifer.com/3W0t.gif'/>
+                <img className = "boozerImage" alt = "pouring drink" src = 'https://i.gifer.com/3W0t.gif'/>
+                <img className = "boozerImage" alt = "pouring drink" src = 'https://i.gifer.com/3W0t.gif'/>
+                <img className = "boozerImage" alt = "pouring drink" src = 'https://i.gifer.com/3W0t.gif'/>
             </Link>
             <ul className="list">
             {cocktailLinks}
